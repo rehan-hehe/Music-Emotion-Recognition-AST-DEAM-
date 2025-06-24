@@ -14,6 +14,7 @@ This project fine-tunes a pre-trained Audio Spectrogram Transformer (AST) model 
   - [Data Preprocessing](#data-preprocessing)
   - [Model Architecture](#model-architecture)
 - [Results](#results)
+- [How to Run](#how-to-run)
 - [Technologies Used](#technologies-used)
 
 ---
@@ -52,8 +53,10 @@ The core of the solution is a fine-tuned Hugging Face Transformer model.
     - `Linear(128, 2)` -> `[valence, arousal]`
 - **Training:** The model was trained for 15 epochs using the **Mean Squared Error (MSE)** loss function and the **Adam** optimizer with a learning rate of `1e-4`. The data was split into training (80%), validation (10%), and testing (10%) sets.
 
-Model download link: [Link](https://huggingface.co/rehan-hehe/music-emotion-ast-model/resolve/main/ast_emotion_regression_moresamples_batch16_epochs15.pth)
-To use the model, follow the notebook guide.
+Model download link: [Link](https://huggingface.co/rehan-hehe/music-emotion-ast-model/resolve/main/ast_emotion_regression_moresamples_batch16_epochs15.pth).
+
+- To use the model, follow the notebook guide.
+
 ---
 
 
