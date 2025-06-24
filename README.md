@@ -14,7 +14,6 @@ This project fine-tunes a pre-trained Audio Spectrogram Transformer (AST) model 
   - [Data Preprocessing](#data-preprocessing)
   - [Model Architecture](#model-architecture)
 - [Results](#results)
-- [How to Run](#how-to-run)
 - [Technologies Used](#technologies-used)
 
 ---
