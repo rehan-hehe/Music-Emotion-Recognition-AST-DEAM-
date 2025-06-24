@@ -1,0 +1,14 @@
+# Core ML/DL Frameworks
+torch
+torchaudio
+transformers
+
+# Data Handling and Processing
+numpy
+pandas
+scikit-learn
+librosa
+
+# Plotting and Visualization
+matplotlib
+seaborn
