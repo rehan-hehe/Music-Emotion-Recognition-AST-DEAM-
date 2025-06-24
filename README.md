@@ -52,8 +52,26 @@ The core of the solution is a fine-tuned Hugging Face Transformer model.
     - `Linear(128, 2)` -> `[valence, arousal]`
 - **Training:** The model was trained for 15 epochs using the **Mean Squared Error (MSE)** loss function and the **Adam** optimizer with a learning rate of `1e-4`. The data was split into training (80%), validation (10%), and testing (10%) sets.
 
+Model download link: [Link](https://huggingface.co/rehan-hehe/music-emotion-ast-model/resolve/main/ast_emotion_regression_moresamples_batch16_epochs15.pth)
+To use the model, follow the notebook guide.
 ---
 
+
+## How to Run
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/rehan-hehe/Music-Emotion-Recognition-AST-DEAM-.git
+    cd Music-Emotion-Recognition-AST-DEAM-
+    ```
+2.  **Install dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3.  **Run the notebook:**
+    Open and run the `music_emotion_recognition_ast.ipynb` notebook in a Jupyter environment like VS Code or Jupyter Lab. Note that you will need to download the DEAM dataset separately and      adjust the file paths in the notebook.
+
+---
 ## Results
 The model was evaluated on a held-out test set. The performance is measured by Mean Squared Error (MSE) and Mean Absolute Error (MAE) on the normalized [0, 1] scale.
 
