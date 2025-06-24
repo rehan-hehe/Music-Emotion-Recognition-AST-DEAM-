@@ -63,30 +63,7 @@ The model was evaluated on a held-out test set. The performance is measured by M
 | **MSE**     | 0.0080  | 0.0080  |
 | **MAE**     | 0.0682  | 0.0689  |
 
-*Note: These results are based on the final evaluation cell in the notebook. MAE represents the average absolute difference between the predicted and actual emotion ratings.*
-
----
-
-## How to Run
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/[your-username]/music-emotion-recognition.git
-    cd music-emotion-recognition
-    ```
-
-2.  **Install Git LFS:**
-    This project uses Git LFS to handle the large model file. [Install Git LFS](https://git-lfs.com/) and then run:
-    ```bash
-    git lfs pull
-    ```
-
-3.  **Install dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4.  **Run the notebook:**
-    Open and run the `music_emotion_recognition_ast.ipynb` notebook in a Jupyter environment like VS Code or Jupyter Lab. Note that you will need to download the DEAM dataset separately and adjust the file paths in the notebook.
+These results demonstrate the model's strong capability to accurately predict both emotional dimensions from raw audio spectrograms. The MAE indicates that, on average, the model's predictions are within ~7% of the true value on the normalized scale.
 
 ---
 
