@@ -94,4 +94,3 @@ These results demonstrate the model's strong capability to accurately predict bo
 - **Librosa & TorchAudio** for audio processing
 - **Scikit-learn** for data splitting and metrics
 - **Pandas & NumPy** for data manipulation
-- **Git & Git LFS** for version control
