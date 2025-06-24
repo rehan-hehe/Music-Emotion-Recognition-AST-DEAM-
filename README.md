@@ -60,8 +60,8 @@ The model was evaluated on a held-out test set. The performance is measured by M
 
 | Metric      | Valence | Arousal |
 |-------------|---------|---------|
-| **MSE**     | 0.0336  | 0.0216  |
-| **MAE**     | 0.1504  | 0.1172  |
+| **MSE**     | 0.0080  | 0.0080  |
+| **MAE**     | 0.0682  | 0.0689  |
 
 *Note: These results are based on the final evaluation cell in the notebook. MAE represents the average absolute difference between the predicted and actual emotion ratings.*
 
