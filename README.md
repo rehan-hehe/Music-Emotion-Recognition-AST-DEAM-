@@ -25,7 +25,7 @@ The objective is to build a robust deep learning model that can analyze a music 
 ---
 
 ## Dataset
-This project utilizes the [DEAM dataset](https://www.upf.edu/web/mtg/deam), which contains 1,802 full-length popular music tracks with moment-by-moment and static valence-arousal annotations. For this project, the static, song-level averaged annotations were used.
+This project utilizes the [DEAM dataset](https://cvml.unige.ch/databases/DEAM), which contains 1,802 full-length popular music tracks with moment-by-moment and static valence-arousal annotations. For this project, the static, song-level averaged annotations were used.
 
 ---
 
