@@ -1,0 +1,10 @@
+streamlit>=1.37
+torch>=2.2
+torchaudio>=2.2
+transformers>=4.40
+librosa>=0.10
+soundfile
+soxr
+numpy
+pandas
+plotly
