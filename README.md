@@ -245,10 +245,6 @@ The supplied archive contains:
 - `prediction_vs_true.png`, `residual_distributions.png`, and `emotion_circumplex_comparison.png` — diagnostic plots.
 - `experiment_info.json` — dataset, target range, model list, evaluation count, and metric list.
 
-## ⚠️ Reproducibility Notes
-
-The notebooks define the split seed and preprocessing values, but the supplied materials do not record a complete hardware/software lockfile or a full random-seed policy for every framework component. Exact numerical reproduction may therefore depend on the execution environment and library versions. The final exported archive remains the authoritative source for the reported metrics.
-
 ## 📚 References
 
 - DEAM: Database for Emotional Analysis in Music.
