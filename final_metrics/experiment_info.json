@@ -1,0 +1,33 @@
+{
+    "dataset": "DEAM",
+    "targets": [
+        "Valence",
+        "Arousal"
+    ],
+    "normalized_target_range": [
+        0,
+        1
+    ],
+    "original_target_range": [
+        1,
+        9
+    ],
+    "models": [
+        "Dummy",
+        "MLP",
+        "CNN",
+        "LSTM",
+        "AST"
+    ],
+    "evaluation_samples": 2430,
+    "metrics": [
+        "MAE",
+        "MSE",
+        "RMSE",
+        "R2",
+        "Pearson",
+        "CCC",
+        "Bias",
+        "Error_STD"
+    ]
+}
