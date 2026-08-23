@@ -1,6 +1,33 @@
 # 🎵 Music Emotion Recognition
 
+> **Can a model learn the emotional shape of music—not just predict the average song?**
+
+```text
+                              MUSIC
+                                │
+                                ▼
+                       ┌─────────────────┐
+                       │  Audio loading   │
+                       │  Mono conversion│
+                       │  Mel extraction │
+                       └────────┬────────┘
+                                │
+                                ▼
+                     Normalized 128 × 1,024 chunks
+                                │
+                    ┌───────────┴───────────┐
+                    ▼                       ▼
+              VALENCE                  AROUSAL
+       negative ◄──────► positive   calm ◄──────► energetic
+```
+
 This project predicts the continuous emotional characteristics of music from audio: **Valence** (pleasantness/positivity) and **Arousal** (energy or activation). The workflow uses the DEAM song-level annotations, converts audio into normalized mel-spectrogram chunks, and compares a constant-mean baseline with an MLP, CNN, bidirectional LSTM, and pretrained Audio Spectrogram Transformer (AST). On the exported test evaluation, the LSTM achieved the lowest overall error, while AST produced the strongest correlation and concordance on both targets.
+
+| Data | Representation | Models | Evaluation |
+|---|---|---|---|
+| 1,802 unique songs | 128-bin mel spectrograms | Dummy · MLP · CNN · BiLSTM · AST | 2,430 held-out chunks |
+
+**Selection:** LSTM for lowest error · AST for strongest agreement.
 
 ---
 
@@ -21,6 +48,10 @@ The DEAM annotations use a 1–9 scale. Training and exported metrics use the no
 
 ## 📊 Dataset and Exploratory Data Analysis
 
+<p align="center">
+  <img src="final_metrics/emotion_circumplex_comparison.png" alt="Emotion circumplex comparison" width="720">
+</p>
+
 The EDA notebook loads the DEAM static song-level annotation files and the corresponding MEMD audio files:
 
 - 1,802 rows and 1,802 unique song IDs were analyzed.
@@ -34,6 +65,17 @@ The EDA notebook loads the DEAM static song-level annotation files and the corre
 The EDA also inspects target distributions, the Valence–Arousal plane, representative waveforms, mel-spectrograms, and dynamic annotation traces. These views matter because they connect the numerical labels to the acoustic representation and show why a continuous, two-dimensional target is appropriate. The quadrant view is descriptive only; the model is not trained as a four-class classifier.
 
 ## ⚙️ Audio Preprocessing Pipeline
+
+```mermaid
+flowchart LR
+    A[Audio] --> B[Mono + 44.1 kHz]
+    B --> C[128-bin mel spectrogram]
+    C --> D[Amplitude to dB]
+    D --> E[Training-only normalization]
+    E --> F[9,216 frames]
+    F --> G[9 × 1,024 chunks]
+    G --> H[Valence + Arousal]
+```
 
 ```text
 Audio file
@@ -93,6 +135,11 @@ Uses `MIT/ast-finetuned-audioset-10-10-0.4593` through `transformers.ASTModel`. 
 
 ## 📈 Results
 
+<p align="center">
+  <img src="final_metrics/mae_comparison.png" alt="MAE comparison" width="47%">
+  <img src="final_metrics/ccc_comparison.png" alt="CCC comparison" width="47%">
+</p>
+
 Final values below come from `final_metrics.csv` in `final_metrics.zip`. Errors are on the normalized 0–1 target scale; CCC, Pearson, and R² are unitless.
 
 | Model | Valence MAE | Arousal MAE | Valence CCC | Arousal CCC | Valence Pearson | Arousal Pearson | Overall MAE |
@@ -106,6 +153,11 @@ Final values below come from `final_metrics.csv` in `final_metrics.zip`. Errors 
 For reference, LSTM overall RMSE is `0.1193` normalized (`0.9544` on the 1–9 scale), and AST overall RMSE is `0.1199` normalized (`0.9594` on the 1–9 scale).
 
 ## 🔍 Beyond Error Metrics: What Did the Models Actually Learn?
+
+<p align="center">
+  <img src="final_metrics/prediction_vs_true.png" alt="Prediction versus true values" width="47%">
+  <img src="final_metrics/residual_distributions.png" alt="Residual distributions" width="47%">
+</p>
 
 The evaluation shows a meaningful distinction between average error and agreement with the target variation:
 
