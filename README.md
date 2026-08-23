@@ -103,25 +103,28 @@ The code first computes spectrogram normalization statistics from eligible train
 
 ## 🏗️ Models
 
-### Dummy baseline
 
-Predicts the training-set mean Valence and mean Arousal for every test chunk. It establishes how much performance comes from learning audio-dependent variation rather than reproducing the central tendency.
+### Audio Spectrogram Transformer (AST)
 
-### MLP
-
-Flattens the `128 × 1,024` spectrogram, then uses fully connected layers of 512 and 128 units with ReLU activations and 0.5 dropout before the two-value regression head. It tests a non-spatial baseline that treats the spectrogram as one vector.
-
-### CNN
-
-Uses three convolutional blocks with channels `32 → 64 → 128`, each followed by `2 × 2` max pooling. The flattened representation passes through a 256-unit layer with 0.5 dropout and a two-unit output head. It tests local time–frequency pattern extraction.
+Uses `MIT/ast-finetuned-audioset-10-10-0.4593` through `transformers.ASTModel`. Mean-pooled transformer representations feed a regression head of `hidden_size → 128 → 2`, with ReLU and 0.2 dropout. It tests transfer learning from an audio transformer pretrained on AudioSet.
 
 ### Bidirectional LSTM
 
 Reinterprets each chunk as a sequence of 1,024 time steps with 128 mel features per step. A two-layer bidirectional LSTM with hidden size 256 processes the sequence; mean pooling over time feeds a 128-unit layer, 0.3 dropout, and the two-target head. It tests temporal structure across the chunk.
 
-### Audio Spectrogram Transformer (AST)
+### CNN
 
-Uses `MIT/ast-finetuned-audioset-10-10-0.4593` through `transformers.ASTModel`. Mean-pooled transformer representations feed a regression head of `hidden_size → 128 → 2`, with ReLU and 0.2 dropout. It tests transfer learning from an audio transformer pretrained on AudioSet.
+Uses three convolutional blocks with channels `32 → 64 → 128`, each followed by `2 × 2` max pooling. The flattened representation passes through a 256-unit layer with 0.5 dropout and a two-unit output head. It tests local time–frequency pattern extraction.
+
+### MLP
+
+Flattens the `128 × 1,024` spectrogram, then uses fully connected layers of 512 and 128 units with ReLU activations and 0.5 dropout before the two-value regression head. It tests a non-spatial baseline that treats the spectrogram as one vector.
+
+### Dummy baseline
+
+Predicts the training-set mean Valence and mean Arousal for every test chunk. It establishes how much performance comes from learning audio-dependent variation rather than reproducing the central tendency.
+
+
 
 ## 🧪 Experimental Setup
 
