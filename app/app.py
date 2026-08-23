@@ -231,7 +231,7 @@ def get_model():
 # means the same thing a DEAM annotator's rating would.
 
 def to_deam_scale(raw_score: float) -> float:
-    return raw_score * 8 + 1
+    return raw_score * 10
 
 
 QUADRANTS = {
@@ -292,7 +292,7 @@ def get_quadrant(valence_1_9: float, arousal_1_9: float) -> dict:
 def intensity_label(valence_1_9: float, arousal_1_9: float) -> str:
     mid = 5.0
     distance = ((valence_1_9 - mid) ** 2 + (arousal_1_9 - mid) ** 2) ** 0.5
-    max_distance = (4 ** 2 + 4 ** 2) ** 0.5
+    max_distance = (5 ** 2 + 5 ** 2) ** 0.5
     ratio = distance / max_distance
     if ratio >= 0.66:
         return "strongly"
@@ -308,7 +308,7 @@ def intensity_label(valence_1_9: float, arousal_1_9: float) -> str:
 def dark_axis(title):
     return dict(
         title=title,
-        range=[1, 9],
+        range=[1, 10],
         zeroline=False,
         gridcolor=COLORS["grid"],
         color=COLORS["muted"],
@@ -328,16 +328,16 @@ def build_circumplex_figure(valence, arousal, quadrant, trajectory=None):
         fig.add_shape(type="rect", x0=x0, y0=y0, x1=x1, y1=y1,
                       line=dict(width=0), fillcolor=color, opacity=0.10, layer="below")
 
-    fig.add_shape(type="line", x0=1, y0=5, x1=9, y1=5,
+    fig.add_shape(type="line", x0=0, y0=5, x1=10, y1=5,
                   line=dict(color=COLORS["grid"], width=1))
-    fig.add_shape(type="line", x0=5, y0=1, x1=5, y1=9,
+    fig.add_shape(type="line", x0=5, y0=0, x1=5, y1=10,
                   line=dict(color=COLORS["grid"], width=1))
 
     label_positions = {
-        "Happy / Excited": (8.8, 8.7, "right", "top"),
-        "Tense / Angry": (1.2, 8.7, "left", "top"),
-        "Sad / Depressed": (1.2, 1.3, "left", "bottom"),
-        "Calm / Content": (8.8, 1.3, "right", "bottom"),
+        "Happy / Excited": (9.8, 9.7, "right", "top"),
+        "Tense / Angry": (0.2, 9.7, "left", "top"),
+        "Sad / Depressed": (0.2, 0.3, "left", "bottom"),
+        "Calm / Content": (9.8, 0.3, "right", "bottom"),
     }
     for name, (x, y, xanchor, yanchor) in label_positions.items():
         fig.add_annotation(x=x, y=y, text=name, showarrow=False,
@@ -392,7 +392,7 @@ def build_trajectory_figure(chunk_valence_1_9, chunk_arousal_1_9):
 
     fig.update_layout(
         xaxis=dict(title="Time into clip (s)", gridcolor=COLORS["grid"], color=COLORS["muted"]),
-        yaxis=dict(title="Score (1-9)", range=[1, 9], gridcolor=COLORS["grid"], color=COLORS["muted"]),
+        yaxis=dict(title="Score (1-10)", range=[1, 10], gridcolor=COLORS["grid"], color=COLORS["muted"]),
         height=300,
         margin=dict(l=10, r=10, t=10, b=10),
         plot_bgcolor="rgba(0,0,0,0)",
@@ -413,7 +413,7 @@ with st.sidebar:
     st.markdown(
         "An **Audio Spectrogram Transformer** (`MIT/ast-finetuned-audioset-10-10-0.4593`), "
         "fine-tuned with a small regression head to predict **valence** and **arousal** "
-        "on a 1–9 scale, trained on the **DEAM** dataset (1,802 songs, multiple listener "
+        "on a 1–10 scale, trained on the **DEAM** dataset (1,802 songs, multiple listener "
         "annotations per song)."
     )
 
@@ -495,7 +495,7 @@ if uploaded_file is not None:
 
             valence = to_deam_scale(valence_raw)
             arousal = to_deam_scale(arousal_raw)
-            chunk_1_9 = chunk_raw * 8 + 1  # [9, 2] on the same 1-9 scale
+            chunk_0_10 = chunk_raw * 10  # [9, 2] on the same 0-10 scale
 
             quadrant = get_quadrant(valence, arousal)
             intensity = intensity_label(valence, arousal)
@@ -506,8 +506,8 @@ if uploaded_file is not None:
 
             with res_col1:
                 m1, m2 = st.columns(2)
-                m1.metric("Valence", f"{valence:.2f} / 9")
-                m2.metric("Arousal", f"{arousal:.2f} / 9")
+                m1.metric("Valence", f"{valence:.2f} / 10")
+                m2.metric("Arousal", f"{arousal:.2f} / 10")
 
                 st.markdown(
                     f"""
@@ -529,7 +529,7 @@ if uploaded_file is not None:
                 )
 
                 st.markdown("#### Emotional arc")
-                st.plotly_chart(build_trajectory_figure(chunk_1_9[:, 0], chunk_1_9[:, 1]), use_container_width=True)
+                st.plotly_chart(build_trajectory_figure(chunk_0_10[:, 0], chunk_0_10[:, 1]), use_container_width=True)
                 st.caption(
                     f"Valence and arousal re-estimated on each ~{CHUNK_DURATION_SECONDS:.1f}s "
                     "chunk of the clip, showing how the predicted mood shifts across the song."
@@ -538,7 +538,7 @@ if uploaded_file is not None:
             with res_col2:
                 st.markdown("#### Where it lands on the emotion map")
                 st.plotly_chart(
-                    build_circumplex_figure(valence, arousal, quadrant, trajectory=chunk_1_9),
+                    build_circumplex_figure(valence, arousal, quadrant, trajectory=chunk_0_10),
                     use_container_width=True,
                 )
                 st.caption(
@@ -548,7 +548,7 @@ if uploaded_file is not None:
                 )
 
             with st.expander("Raw per-chunk predictions"):
-                chunk_df = pd.DataFrame(chunk_1_9, columns=["Valence", "Arousal"])
+                chunk_df = pd.DataFrame(chunk_0_10, columns=["Valence", "Arousal"])
                 chunk_df.index = [f"{i * CHUNK_DURATION_SECONDS:.1f}s" for i in range(len(chunk_df))]
                 st.dataframe(chunk_df.style.format("{:.3f}"), use_container_width=True)
 
@@ -557,8 +557,8 @@ if uploaded_file is not None:
                     f"""
                     The model outputs raw valence and arousal scores between 0 and 1
                     ({valence_raw:.3f} and {arousal_raw:.3f} for this track, averaged
-                    across {NUM_CHUNKS} chunks), converted to the 1–9 DEAM annotation
-                    scale via `raw * 8 + 1`. The quadrant label comes from where the
+                    across {NUM_CHUNKS} chunks), converted to the 1–10 DEAM annotation
+                    scale via `raw * 10 `. The quadrant label comes from where the
                     point falls relative to the midpoint (5.0) on each axis, following
                     Russell's circumplex model of affect.
                     """
