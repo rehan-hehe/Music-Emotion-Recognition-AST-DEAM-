@@ -32,8 +32,21 @@ This project predicts the continuous emotional characteristics of music from aud
 ---
 ## 🚀 Live Demo
 
-🔗 **Try the deployed application:** https://music-emotion-detection-ast.streamlit.app/
+Try the deployed application here:
 
+👉 [Music Emotion Recognition – Live Demo](https://music-emotion-detection-ast.streamlit.app/)
+
+### Interactive Emotion Analysis
+
+Upload a music track to receive:
+
+- **Valence and Arousal predictions** on a 1–10 scale
+- An interpretable **emotion label**
+- A visualization on the **valence–arousal emotion space**
+- An **emotional arc** showing predictions across audio chunks
+- Context about the underlying **Audio Spectrogram Transformer**
+
+![Music Emotion Recognition Demo](assets/app-demo.png)
 
 ## Project Highlights
 
