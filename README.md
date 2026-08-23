@@ -183,17 +183,17 @@ AST is a strong alternative when preserving target variation and agreement is mo
 The predicted pair can be interpreted on the Valence–Arousal plane. The quadrant labels are descriptive, with 5.0 as the neutral dividing point on the original 1–9 annotation scale:
 
 ```text
-                         High Arousal
-                              ↑
+                        High Arousal
+                             ↑
        Low Valence           |           High Valence
        / High Arousal        |           / High Arousal
-                              |
+                             |
        ----------------------+----------------------→ Valence
-                              |
+                             |
        Low Valence           |           High Valence
        / Low Arousal         |           / Low Arousal
-                              ↓
-                          Low Arousal
+                             ↓
+                        Low Arousal
 ```
 
 ## 💻 Running the Project
