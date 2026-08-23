@@ -118,7 +118,38 @@ def download_weights():
 # ============================================================
 # LOAD MODEL
 # ============================================================
+def remap_legacy_ast_keys(state_dict):
+    """
+    This checkpoint was saved with an older `transformers` version, where
+    ASTModel's internals were named `ast.encoder.layer.N.attention.attention.
+    query...`. Newer `transformers` versions renamed these to
+    `ast.layers.N.attention.q_proj...`. This remaps the old names to the new
+    ones so the checkpoint loads correctly regardless of which transformers
+    version is installed on the deploy target.
+    """
+    key_map = [
+        ("attention.output.dense", "attention.o_proj"),
+        ("attention.attention.query", "attention.q_proj"),
+        ("attention.attention.key", "attention.k_proj"),
+        ("attention.attention.value", "attention.v_proj"),
+        ("intermediate.dense", "mlp.fc1"),
+        ("output.dense", "mlp.fc2"),
+    ]
 
+    new_state_dict = {}
+
+    for key, value in state_dict.items():
+        new_key = key
+        if new_key.startswith("ast.encoder.layer."):
+            new_key = new_key.replace("ast.encoder.layer.", "ast.layers.", 1)
+            for old_sub, new_sub in key_map:
+                if old_sub in new_key:
+                    new_key = new_key.replace(old_sub, new_sub)
+                    break
+        new_state_dict[new_key] = value
+
+    return new_state_dict
+    
 def load_model(device):
 
     download_weights()
@@ -132,9 +163,11 @@ def load_model(device):
         map_location=device
     )
 
-    model.load_state_dict(
-        state_dict
-    )
+    try:
+        model.load_state_dict(state_dict)
+    except RuntimeError:
+        print("Standard load failed — retrying with legacy AST key remapping...")
+        model.load_state_dict(remap_legacy_ast_keys(state_dict))
 
     model.to(device)
 
