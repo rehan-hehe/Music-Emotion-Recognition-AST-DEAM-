@@ -33,9 +33,9 @@ This project predicts the continuous emotional characteristics of music from aud
 ## 🚀 Live Demo
 
 🔗 **Try the deployed application:** https://music-emotion-detection-ast.streamlit.app/
----
 
-## 🚀 Project Highlights
+
+## Project Highlights
 
 - 1,802 unique DEAM songs with complete audio paths and song-level Valence/Arousal annotations.
 - Leak-free song-level train/validation/test splitting with `random_state=42`.
