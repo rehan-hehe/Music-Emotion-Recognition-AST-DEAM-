@@ -49,7 +49,7 @@ The DEAM annotations use a 1–9 scale. Training and exported metrics use the no
 ## 📊 Dataset and Exploratory Data Analysis
 
 <p align="center">
-  <img src="final_metrics/emotion_circumplex_comparison.png" alt="Emotion circumplex comparison" width="720">
+  <img src="final_metrics/eda.png" alt="" width="720">
 </p>
 
 The EDA notebook loads the DEAM static song-level annotation files and the corresponding MEMD audio files:
