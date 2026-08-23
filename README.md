@@ -7,7 +7,7 @@
                                 │
                                 ▼
                        ┌─────────────────┐
-                       │  Audio loading   │
+                       │  Audio loading  │
                        │  Mono conversion│
                        │  Mel extraction │
                        └────────┬────────┘
@@ -29,6 +29,10 @@ This project predicts the continuous emotional characteristics of music from aud
 
 **Selection:** LSTM for lowest error · AST for strongest agreement.
 
+---
+## 🚀 Live Demo
+
+🔗 **Try the deployed application:** https://music-emotion-detection-ast.streamlit.app/
 ---
 
 ## 🚀 Project Highlights
