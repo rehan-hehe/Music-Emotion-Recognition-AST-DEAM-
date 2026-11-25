@@ -189,12 +189,6 @@ The evaluation shows a meaningful distinction between average error and agreemen
 
 The supplied `prediction_vs_true.png`, `residual_distributions.png`, `mae_vs_ccc.png`, and `emotion_circumplex_comparison.png` provide the corresponding visual diagnostics. They should be read together with the exported CSV/JSON rather than treated as substitutes for the numerical evaluation.
 
-## 🏆 Final Model Selection
-
-Based on the final exported evidence, **LSTM is selected as the primary model for this project** because it has the lowest overall MAE, MSE, and RMSE and the best per-target MAE. This is a practical choice when average prediction error is the main objective.
-
-AST is a strong alternative when preserving target variation and agreement is more important: it has higher Pearson correlation and CCC for both outputs, plus slightly better Arousal R². The results therefore support a nuanced conclusion: **LSTM wins the error-based selection; AST wins the agreement-based diagnostics.** The artifacts do not establish statistical significance, so the README does not claim that the observed differences generalize beyond this test set.
-
 ## 🗺️ Emotion Interpretation
 
 The predicted pair can be interpreted on the Valence–Arousal plane. The quadrant labels are descriptive, with 5.0 as the neutral dividing point on the original 0–10 annotation scale:
